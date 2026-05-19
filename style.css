@@ -924,7 +924,7 @@
 
   /* ── HAMBURGUESA ── */
   .nav-hamburger {
-    display: none;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 5px;
@@ -1096,6 +1096,12 @@
   }
 
   /* ── RESPONSIVE ── */
+  @media (min-width: 641px) and (orientation: portrait) {
+    .nav-hamburger { display: none; }
+  }
+  @media (min-width: 901px) {
+    .nav-hamburger { display: none; }
+  }
   @media (max-width: 1024px) {
     nav { padding: 1rem 2rem; }
     nav ul { gap: 1.5rem; }

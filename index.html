@@ -232,6 +232,40 @@
   </div>
 </section>
 
+<!-- NIVEL INTERACTIVO -->
+<section class="nivel-section" id="nivel">
+  <div class="nivel-left">
+    <p class="tag">Solo en mobile</p>
+    <h2 class="section-title">Una obra bien hecha<br>empieza <span style="color:var(--naranja)">nivelada</span></h2>
+    <p class="section-body">En construcción, un milímetro fuera de nivel arruina todo lo que viene después. Lo mismo pasa con los trámites: un error al inicio cuesta semanas al final.</p>
+    <p class="section-body" style="opacity:0.5; font-size:0.85rem;">Inclináel teléfono para ver el nivel en acción.</p>
+  </div>
+  <div class="nivel-right">
+    <div class="nivel-instruccion" id="nivelInstruccion">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+      <span>Activar nivel</span>
+    </div>
+    <div class="nivel-display" id="nivelDisplay" style="display:none;">
+      <div class="nivel-tubo nivel-tubo-h">
+        <div class="nivel-burbuja-h" id="burbujaH"></div>
+        <div class="nivel-centro"></div>
+      </div>
+      <div class="nivel-tubo nivel-tubo-v">
+        <div class="nivel-burbuja-v" id="burbujaV"></div>
+        <div class="nivel-centro"></div>
+      </div>
+      <div class="nivel-angulos">
+        <span id="anguloX">0.0°</span>
+        <span id="anguloY">0.0°</span>
+      </div>
+      <div class="nivel-estado" id="nivelEstado">Incliná el teléfono</div>
+    </div>
+    <div class="nivel-error" id="nivelError" style="display:none;">
+      <p>Tu navegador no soporta el sensor de orientación, o no tenemos permiso para accederlo.</p>
+    </div>
+  </div>
+</section>
+
 <!-- TESTIMONIOS -->
 <section class="testimonios" id="clientes">
   <div class="testimonios-header">
@@ -345,6 +379,86 @@
     <a href="https://wa.me/542996577713">WhatsApp</a>
   </div>
 </footer>
+
+<script>
+(function() {
+  var instruccion = document.getElementById('nivelInstruccion');
+  var display     = document.getElementById('nivelDisplay');
+  var error       = document.getElementById('nivelError');
+  var burbujaH    = document.getElementById('burbujaH');
+  var burbujaV    = document.getElementById('burbujaV');
+  var anguloX     = document.getElementById('anguloX');
+  var anguloY     = document.getElementById('anguloY');
+  var estado      = document.getElementById('nivelEstado');
+
+  if (!instruccion) return; // sección no visible en desktop
+
+  function iniciarSensor() {
+    // iOS 13+ requiere permiso explícito
+    if (typeof DeviceOrientationEvent !== 'undefined' &&
+        typeof DeviceOrientationEvent.requestPermission === 'function') {
+      DeviceOrientationEvent.requestPermission()
+        .then(function(res) {
+          if (res === 'granted') activar();
+          else mostrarError();
+        })
+        .catch(mostrarError);
+    } else if ('DeviceOrientationEvent' in window) {
+      activar();
+    } else {
+      mostrarError();
+    }
+  }
+
+  function activar() {
+    instruccion.style.display = 'none';
+    display.style.display = 'flex';
+    window.addEventListener('deviceorientation', onOrientacion);
+  }
+
+  function mostrarError() {
+    instruccion.style.display = 'none';
+    error.style.display = 'block';
+  }
+
+  function onOrientacion(e) {
+    var beta  = e.beta  || 0; // inclinación adelante/atrás (-180 a 180)
+    var gamma = e.gamma || 0; // inclinación izquierda/derecha (-90 a 90)
+
+    // Clampear a rango útil
+    var bClamped = Math.max(-30, Math.min(30, beta));
+    var gClamped = Math.max(-30, Math.min(30, gamma));
+
+    // Posición burbuja horizontal (gamma)
+    var tuboH = burbujaH.parentElement;
+    var rangoH = (tuboH.offsetWidth - 38) / 2;
+    var posH = 50 + (gClamped / 30) * 100 * (rangoH / tuboH.offsetWidth);
+    burbujaH.style.left = posH + '%';
+
+    // Posición burbuja vertical (beta)
+    var tuboV = burbujaV.parentElement;
+    var rangoV = (tuboV.offsetHeight - 38) / 2;
+    var posV = 50 + (bClamped / 30) * 100 * (rangoV / tuboV.offsetHeight);
+    burbujaV.style.top = posV + '%';
+
+    // Ángulos
+    anguloX.textContent = 'X: ' + beta.toFixed(1) + '°';
+    anguloY.textContent = 'Y: ' + gamma.toFixed(1) + '°';
+
+    // Estado
+    var nivelado = Math.abs(beta) < 2 && Math.abs(gamma) < 2;
+    if (nivelado) {
+      estado.textContent = '¡NIVELADO!';
+      estado.classList.add('nivelado');
+    } else {
+      estado.textContent = 'Ajustá el ángulo';
+      estado.classList.remove('nivelado');
+    }
+  }
+
+  instruccion.addEventListener('click', iniciarSensor);
+})();
+</script>
 
 </body>
 </html>

@@ -952,8 +952,8 @@
     flex-direction: column;
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(10,10,10,0.97);
-    backdrop-filter: blur(16px);
+    background: #0a0a0a;
+    backdrop-filter: none;
     z-index: 150;
     justify-content: center;
     align-items: center;

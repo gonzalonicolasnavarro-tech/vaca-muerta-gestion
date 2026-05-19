@@ -925,6 +925,106 @@
   /* ── NIVEL INTERACTIVO (solo mobile) ── */
   .nivel-section { display: none; }
 
+  .nivel-section {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    padding: 4rem 1.2rem;
+    background: var(--tierra);
+  }
+  .nivel-left { }
+  .nivel-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .nivel-instruccion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    cursor: pointer;
+    color: var(--naranja);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.1em;
+    padding: 1.5rem 3rem;
+    border: 1px solid var(--naranja);
+    border-radius: 2px;
+    transition: background 0.2s;
+    width: 100%;
+    text-align: center;
+  }
+  .nivel-instruccion svg { color: var(--naranja); }
+  .nivel-display {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .nivel-tubo {
+    position: relative;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--linea);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+  .nivel-tubo-h { width: 100%; max-width: 300px; height: 48px; }
+  .nivel-tubo-v { width: 48px; height: 160px; }
+  .nivel-burbuja-h {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, var(--cyan-vmg), var(--naranja));
+    transform: translate(-50%, -50%);
+    transition: left 0.08s ease-out;
+    box-shadow: 0 0 16px rgba(0,200,224,0.6);
+  }
+  .nivel-burbuja-v {
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, var(--cyan-vmg), var(--naranja));
+    transform: translate(-50%, -50%);
+    transition: top 0.08s ease-out;
+    box-shadow: 0 0 16px rgba(0,200,224,0.6);
+  }
+  .nivel-centro {
+    position: absolute;
+    top: 50%; left: 50%;
+    background: rgba(255,255,255,0.12);
+    transform: translate(-50%, -50%);
+  }
+  .nivel-tubo-h .nivel-centro { width: 100%; height: 1px; }
+  .nivel-tubo-v .nivel-centro { width: 1px; height: 100%; }
+  .nivel-angulos {
+    display: flex;
+    gap: 2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--gris);
+    letter-spacing: 0.1em;
+  }
+  .nivel-estado {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.06em;
+    color: var(--blanco);
+    text-align: center;
+    transition: color 0.4s;
+  }
+  .nivel-estado.nivelado { color: var(--cyan-vmg); }
+  .nivel-error {
+    font-size: 0.85rem;
+    color: var(--gris);
+    text-align: center;
+    line-height: 1.7;
+    padding: 1rem;
+  }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 1024px) {
     nav { padding: 1rem 2rem; }
@@ -1001,105 +1101,5 @@
     .cta-section::before { font-size: 55vw; }
     footer { padding: 2rem 1.2rem; flex-direction: column; align-items: flex-start; gap: 1rem; }
     .footer-links { flex-wrap: wrap; gap: 1rem; }
-
-    /* nivel interactivo */
-    .nivel-section {
-      display: grid !important;
-      grid-template-columns: 1fr;
-      gap: 2.5rem;
-      padding: 4rem 1.2rem;
-      background: var(--tierra);
-    }
-    .nivel-right {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.5rem;
-    }
-    .nivel-instruccion {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.8rem;
-      cursor: pointer;
-      color: var(--naranja);
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.4rem;
-      letter-spacing: 0.1em;
-      padding: 1.5rem 3rem;
-      border: 1px solid var(--naranja);
-      border-radius: 2px;
-      transition: background 0.2s;
-      width: 100%;
-      text-align: center;
-    }
-    .nivel-instruccion svg { color: var(--naranja); }
-    .nivel-display {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.5rem;
-    }
-    .nivel-tubo {
-      position: relative;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid var(--linea);
-      border-radius: 100px;
-      overflow: hidden;
-    }
-    .nivel-tubo-h { width: 100%; max-width: 300px; height: 48px; }
-    .nivel-tubo-v { width: 48px; height: 160px; }
-    .nivel-burbuja-h {
-      position: absolute;
-      top: 50%; left: 50%;
-      width: 38px; height: 38px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, var(--cyan-vmg), var(--naranja));
-      transform: translate(-50%, -50%);
-      transition: left 0.08s ease-out;
-      box-shadow: 0 0 16px rgba(0,200,224,0.6);
-    }
-    .nivel-burbuja-v {
-      position: absolute;
-      left: 50%; top: 50%;
-      width: 38px; height: 38px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, var(--cyan-vmg), var(--naranja));
-      transform: translate(-50%, -50%);
-      transition: top 0.08s ease-out;
-      box-shadow: 0 0 16px rgba(0,200,224,0.6);
-    }
-    .nivel-centro {
-      position: absolute;
-      top: 50%; left: 50%;
-      background: rgba(255,255,255,0.12);
-      transform: translate(-50%, -50%);
-    }
-    .nivel-tubo-h .nivel-centro { width: 100%; height: 1px; }
-    .nivel-tubo-v .nivel-centro { width: 1px; height: 100%; }
-    .nivel-angulos {
-      display: flex;
-      gap: 2rem;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--gris);
-      letter-spacing: 0.1em;
-    }
-    .nivel-estado {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.8rem;
-      letter-spacing: 0.06em;
-      color: var(--blanco);
-      text-align: center;
-      transition: color 0.4s;
-    }
-    .nivel-estado.nivelado { color: var(--cyan-vmg); }
-    .nivel-error {
-      font-size: 0.85rem;
-      color: var(--gris);
-      text-align: center;
-      line-height: 1.7;
-      padding: 1rem;
-    }
+    .nivel-section { display: grid !important; }
   }

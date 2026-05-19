@@ -922,6 +922,76 @@
   ::-webkit-scrollbar-track { background: var(--negro); }
   ::-webkit-scrollbar-thumb { background: var(--naranja); border-radius: 2px; }
 
+  /* ── HAMBURGUESA ── */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 200;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--arena);
+    border-radius: 2px;
+    transition: transform 0.25s, opacity 0.25s;
+  }
+  .nav-hamburger.abierto span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.abierto span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.abierto span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* menú desplegable mobile */
+  #navMenu.menu-mobile-abierto {
+    display: flex !important;
+    flex-direction: column;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(10,10,10,0.97);
+    backdrop-filter: blur(16px);
+    z-index: 150;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    list-style: none;
+    padding: 0;
+  }
+  #navMenu.menu-mobile-abierto li {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid var(--linea);
+  }
+  #navMenu.menu-mobile-abierto a {
+    display: block;
+    padding: 1.4rem 2rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.1em;
+    color: var(--blanco);
+    text-decoration: none;
+    transition: color 0.2s, background 0.2s;
+  }
+  #navMenu.menu-mobile-abierto a:hover {
+    color: var(--naranja);
+    background: rgba(26,63,168,0.08);
+  }
+  #navMenu.menu-mobile-abierto a[href="#nivel"] {
+    color: var(--cyan-vmg);
+  }
+
+  /* Fix nivel en landscape — forzar visible */
+  @media (orientation: landscape) and (max-width: 900px) {
+    .nivel-section { display: grid !important; }
+    .nav-hamburger { display: flex !important; }
+    nav ul { display: none !important; }
+    .nav-cta { display: none !important; }
+  }
+
   /* ── NIVEL INTERACTIVO (solo mobile) ── */
   .nivel-section { display: none; }
 
@@ -1060,7 +1130,8 @@
   @media (max-width: 640px) {
     nav { padding: 0.9rem 1.2rem; }
     nav ul { display: none; }
-    .nav-cta { padding: 0.5rem 1rem; font-size: 0.68rem; }
+    .nav-cta { display: none; }
+    .nav-hamburger { display: flex !important; }
     .hero-left { padding: 7rem 1.2rem 2.5rem; }
     .hero-title { font-size: clamp(3.2rem, 15vw, 5rem); }
     .hero-desc { font-size: 0.95rem; }

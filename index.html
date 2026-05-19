@@ -18,13 +18,19 @@
          onerror="this.style.display='none'; document.querySelector('.nav-logo-fallback').style.display='block'">
   </a>
   <span class="nav-logo-fallback">VMG</span>
-  <ul>
-    <li><a href="#solucion">Nuestra solución</a></li>
-    <li><a href="#servicios">Servicios</a></li>
-    <li><a href="#clientes">Clientes</a></li>
-    <li><a href="#quienes">Nosotros</a></li>
+  <ul id="navMenu">
+    <li><a href="#solucion" class="nav-link-mobile">Nuestra solución</a></li>
+    <li><a href="#servicios" class="nav-link-mobile">Servicios</a></li>
+    <li><a href="#clientes" class="nav-link-mobile">Clientes</a></li>
+    <li><a href="#nivel" class="nav-link-mobile">Nivel</a></li>
+    <li><a href="#quienes" class="nav-link-mobile">Nosotros</a></li>
   </ul>
-  <a href="https://wa.me/542996577713" class="nav-cta">Consultá gratis</a>
+  <div style="display:flex; align-items:center; gap:1rem;">
+    <a href="https://wa.me/542996577713" class="nav-cta">Consultá gratis</a>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -381,6 +387,27 @@
 </footer>
 
 <script>
+// ── HAMBURGUESA ──
+(function() {
+  var btn  = document.getElementById('navHamburger');
+  var menu = document.getElementById('navMenu');
+  if (!btn) return;
+
+  btn.addEventListener('click', function() {
+    var abierto = menu.classList.toggle('menu-mobile-abierto');
+    btn.classList.toggle('abierto', abierto);
+    document.body.style.overflow = abierto ? 'hidden' : '';
+  });
+
+  // Cerrar al hacer click en un link
+  menu.querySelectorAll('a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      menu.classList.remove('menu-mobile-abierto');
+      btn.classList.remove('abierto');
+      document.body.style.overflow = '';
+    });
+  });
+})();
 (function() {
   var instruccion = document.getElementById('nivelInstruccion');
   var display     = document.getElementById('nivelDisplay');

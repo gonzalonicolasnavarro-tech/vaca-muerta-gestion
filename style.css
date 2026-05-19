@@ -960,11 +960,28 @@
     gap: 0;
     list-style: none;
     padding: 0;
+    animation: menuEntrada 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  @keyframes menuEntrada {
+    from { opacity: 0; transform: translateY(-20px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
   }
   #navMenu.menu-mobile-abierto li {
     width: 100%;
     text-align: center;
     border-bottom: 1px solid var(--linea);
+    opacity: 0;
+    animation: itemEntrada 0.3s ease both;
+  }
+  #navMenu.menu-mobile-abierto li:nth-child(1) { animation-delay: 0.08s; }
+  #navMenu.menu-mobile-abierto li:nth-child(2) { animation-delay: 0.13s; }
+  #navMenu.menu-mobile-abierto li:nth-child(3) { animation-delay: 0.18s; }
+  #navMenu.menu-mobile-abierto li:nth-child(4) { animation-delay: 0.23s; }
+  #navMenu.menu-mobile-abierto li:nth-child(5) { animation-delay: 0.28s; }
+  #navMenu.menu-mobile-abierto li:nth-child(6) { animation-delay: 0.33s; }
+  @keyframes itemEntrada {
+    from { opacity: 0; transform: translateX(-16px); }
+    to   { opacity: 1; transform: translateX(0); }
   }
   #navMenu.menu-mobile-abierto a {
     display: block;
@@ -974,15 +991,39 @@
     letter-spacing: 0.1em;
     color: var(--blanco);
     text-decoration: none;
-    transition: color 0.2s, background 0.2s;
+    transition: color 0.2s, background 0.2s, padding-left 0.2s;
   }
+  #navMenu.menu-mobile-abierto a:active,
   #navMenu.menu-mobile-abierto a:hover {
     color: var(--naranja);
-    background: rgba(26,63,168,0.08);
+    padding-left: 2.6rem;
   }
-  #navMenu.menu-mobile-abierto a[href="#nivel"] {
-    color: var(--cyan-vmg);
+  #navMenu.menu-mobile-abierto a[href="#nivel"] { color: var(--cyan-vmg); }
+  #navMenu.menu-mobile-abierto a[href="#nivel"]:hover { color: var(--blanco); }
+  #navMenu.menu-mobile-abierto .menu-mobile-wa {
+    color: var(--naranja) !important;
+    font-size: 1.4rem;
   }
+
+  /* botón cerrar */
+  .nav-cerrar {
+    display: none;
+    position: fixed;
+    top: 1.2rem; right: 1.2rem;
+    z-index: 160;
+    background: none;
+    border: 1px solid var(--linea);
+    color: var(--blanco);
+    font-size: 1.4rem;
+    width: 40px; height: 40px;
+    border-radius: 2px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .nav-cerrar:hover { border-color: var(--naranja); color: var(--naranja); }
+  .nav-cerrar.visible { display: flex; }
 
   /* Fix nivel en landscape — forzar visible */
   @media (orientation: landscape) and (max-width: 900px) {

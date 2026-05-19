@@ -19,12 +19,15 @@
   </a>
   <span class="nav-logo-fallback">VMG</span>
   <ul id="navMenu">
-    <li><a href="#solucion" class="nav-link-mobile">Nuestra solución</a></li>
-    <li><a href="#servicios" class="nav-link-mobile">Servicios</a></li>
-    <li><a href="#clientes" class="nav-link-mobile">Clientes</a></li>
-    <li><a href="#nivel" class="nav-link-mobile">Nivel</a></li>
-    <li><a href="#quienes" class="nav-link-mobile">Nosotros</a></li>
+    <li><a href="#solucion">Nuestra solución</a></li>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#clientes">Clientes</a></li>
+    <li><a href="#nivel">Nivel</a></li>
+    <li><a href="#quienes">Nosotros</a></li>
+    <li><a href="https://wa.me/542996577713" class="menu-mobile-wa">Consultá gratis →</a></li>
   </ul>
+  <!-- botón cerrar dentro del overlay, solo visible cuando está abierto -->
+  <button class="nav-cerrar" id="navCerrar" aria-label="Cerrar menú">✕</button>
   <div style="display:flex; align-items:center; gap:1rem;">
     <a href="https://wa.me/542996577713" class="nav-cta">Consultá gratis</a>
     <button class="nav-hamburger" id="navHamburger" aria-label="Menú">
@@ -389,23 +392,30 @@
 <script>
 // ── HAMBURGUESA ──
 (function() {
-  var btn  = document.getElementById('navHamburger');
-  var menu = document.getElementById('navMenu');
+  var btn    = document.getElementById('navHamburger');
+  var cerrar = document.getElementById('navCerrar');
+  var menu   = document.getElementById('navMenu');
   if (!btn) return;
 
-  btn.addEventListener('click', function() {
-    var abierto = menu.classList.toggle('menu-mobile-abierto');
-    btn.classList.toggle('abierto', abierto);
-    document.body.style.overflow = abierto ? 'hidden' : '';
-  });
+  function abrir() {
+    menu.classList.add('menu-mobile-abierto');
+    btn.classList.add('abierto');
+    cerrar.classList.add('visible');
+    document.body.style.overflow = 'hidden';
+  }
 
-  // Cerrar al hacer click en un link
+  function cerrarMenu() {
+    menu.classList.remove('menu-mobile-abierto');
+    btn.classList.remove('abierto');
+    cerrar.classList.remove('visible');
+    document.body.style.overflow = '';
+  }
+
+  btn.addEventListener('click', abrir);
+  cerrar.addEventListener('click', cerrarMenu);
+
   menu.querySelectorAll('a').forEach(function(a) {
-    a.addEventListener('click', function() {
-      menu.classList.remove('menu-mobile-abierto');
-      btn.classList.remove('abierto');
-      document.body.style.overflow = '';
-    });
+    a.addEventListener('click', cerrarMenu);
   });
 })();
 (function() {
